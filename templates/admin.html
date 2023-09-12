@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+  <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+  <center>
+    <h1 class="text-center">Admin Page</h1><br>
+      {% for i in messages %}
+        <div class="alert alert-{{ i.tags }}" role="alert">
+            {{ i }}
+        </div>
+
+      {% endfor %}
+
+  </center>
+
+     <!--div class="container justify-contents-center col-lg-10">
+        <form class="form-group" method="POST">
+            <div class="col-md-6">
+                <div class="mb-3">
+                        <label for="exampleTextArea" class="form-label align-left">ADD Question</label>
+                        <textarea name="question" class="form-control m-2" id="exampleTextArea" rows="3" placeholder="Enter Question..." required></textarea>
+                </div>
+                <input name="option1" type="text" class="form-control m-2" placeholder="Enter Option 1" aria-label="OForm" aria-describedby="basic-addon" required>
+                <input name="option2" type="text" class="form-control m-2" placeholder="Enter Option 2" aria-label="OForm" aria-describedby="basic-addon" required>
+                <input name="option3" type="text" class="form-control m-2" placeholder="Enter Option 3" aria-label="OForm" aria-describedby="basic-addon" required>
+                <input name="option4" type="text" class="form-control m-2" placeholder="Enter Option 4" aria-label="OForm" aria-describedby="basic-addon" required>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle m-2"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Correct Answer
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="correctAnswerDropdown">
+                        <select name="cAnswer" class="dropdown-item" href="#" data-value="">Select an option</select>
+                    </div>
+                </div>
+                <input name="toughness" type="number" class="form-control m-2" placeholder="Toughness" aria-label="OForm" aria-describedby="basic-addon" required min="1" max="10">
+                <input name="topic" type="text" class="form-control m-2" placeholder="Topic" aria-label="OForm" aria-describedby="basic-addon" required >
+
+            </div>
+                     <br>
+            <br>
+            <button type="submit" class="btn btn-primary m-2 align-right">Submit</button>
+
+        </form>
+    </div>
+
+
+ <script>
+        // JavaScript using jQuery to add a new option to the dropdown with the full text from the input fields
+        $(document).ready(function() {
+            $('input[name^="option"]').on('input', function() {
+                $('#correctAnswerDropdown').empty(); // Clear existing options
+                $('input[name^="option"]').each(function() {
+                    const optionValue = $(this).val().trim();
+                    if (optionValue !== '') {
+                        const option = $('<a class="dropdown-item" href="#"></a>').attr('data-value', optionValue).text(optionValue);
+                        $('#correctAnswerDropdown').append(option);
+                    }
+                });
+            });
+
+            // Handle selection of dropdown items
+            $('#correctAnswerDropdown').on('click', '.dropdown-item', function() {
+                const selectedValue = $(this).attr('data-value');
+                $('#dropdownMenuButton').text(selectedValue);
+            });
+        });
+    </script-->
+<div class="container justify-contents-center col-lg-10">
+        <form class="form-group" method="POST">{% csrf_token %}
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="exampleTextArea" class="form-label align-left">ADD Question</label>
+                    <textarea name="question" class="form-control m-2" id="exampleTextArea" rows="3" placeholder="Enter Question..." required></textarea>
+                </div>
+                <input name="option1" type="text" class="form-control m-2" placeholder="Enter Option 1" aria-label="OForm" aria-describedby="basic-addon" required>
+                <input name="option2" type="text" class="form-control m-2" placeholder="Enter Option 2" aria-label="OForm" aria-describedby="basic-addon" required>
+                <input name="option3" type="text" class="form-control m-2" placeholder="Enter Option 3" aria-label="OForm" aria-describedby="basic-addon" required>
+                <input name="option4" type="text" class="form-control m-2" placeholder="Enter Option 4" aria-label="OForm" aria-describedby="basic-addon" required>
+
+                <label class="form-label m-2">Select Correct Answer:</label>
+                <select name="cAnswer" class="form-select m-2" required>
+                    <option value="" >Select an option</option>
+
+                </select>
+
+                <input name="toughness" type="number" class="form-control m-2" placeholder="Toughness" aria-label="OForm" aria-describedby="basic-addon" required min="0" max="10">
+                <input name="topic" type="text" class="form-control m-2" placeholder="Topic" aria-label="OForm" aria-describedby="basic-addon" required>
+            </div>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary m-2 align-right">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript using jQuery to add a new option to the select with the full text from the input fields
+        $(document).ready(function() {
+            $('input[name^="option"]').on('input', function() {
+                $('select[name="cAnswer"]').empty(); // Clear existing options
+                $('input[name^="option"]').each(function() {
+                    const optionValue = $(this).val().trim();
+                    if (optionValue !== '') {
+                        const option = $('<option></option>').attr('value', optionValue).text(optionValue);
+                        $('select[name="cAnswer"]').append(option);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>
+
+
